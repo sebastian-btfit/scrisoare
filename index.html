@@ -195,13 +195,14 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
   'use strict';
   /* Pe pagina reală, FORM_ACTION e adresa formResponse a formularului Google
      și ENTRY sunt câmpurile lui; fără ele, pagina rulează ca previzualizare. */
-  const FORM_ACTION = '';
-  const ENTRY = { nume: '', varianta: '', q1: '', q2: '', q3: '', q4: '', q5: '' };
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSclCsxK_YaEirt_JZ7jWR6GJAsPrKAOFWvs_NBtpoB1Sb39jw/formResponse';
+  const ENTRY = { nume: 'entry.134679440', varianta: 'entry.112885295', q1: 'entry.1578180754', q2: 'entry.943722460', q3: 'entry.1495380976', q4: 'entry.743081124', q5: 'entry.1046446693' };
 
   const $ = (s) => document.querySelector(s);
   const P = new URLSearchParams(location.search);
   const demo = !FORM_ACTION;
-  const nume = (P.get('n') || 'Ana').slice(0, 40);
+  const numeP = (P.get('n') || (FORM_ACTION ? '' : 'Ana')).trim().slice(0, 40);
+  const nume = numeP;
   const fem = (P.get('g') || 'f') !== 'm';
   const varianta = P.get('v') === 'atins' ? 'atins' : 'drum';
   const G = (f, m) => (fem ? f : m);
@@ -210,7 +211,7 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
 
   // ---------- textul ----------
   const T = varianta === 'atins' ? {
-    intro: ['Salut, ' + nume + '! Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la tot ce ai construit și la omul care ai devenit.',
+    intro: [(nume ? 'Salut, ' + nume + '!' : 'Salut!') + ' Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la tot ce ai construit și la omul care ai devenit.',
             'Mi-ar plăcea să scrii o scrisoare către versiunea ta din viitor, cea care a păstrat tot ce ai construit în aceste luni și a mers și mai departe.',
             'Scrie tot ce simți, cât mai sincer. Dacă dorești, poți împărtăși scrisoarea și cu mine, mi-ar face mare plăcere să o citesc!'],
     titlu: 'Imaginează-ți că a trecut un an.',
@@ -218,7 +219,7 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
     closing: ['Pune scrisoarea într-un plic și păstrează-o undeva la îndemână. O poți reciti când simți că vechile obiceiuri încearcă să se întoarcă sau o poți deschide peste un an, ca să vezi cât de departe ai ajuns.',
               'Să îți amintească mereu de ce ai început și cât de mult valorezi. <b>Ai demonstrat că poți</b>, iar de aici evoluția continuă. Eu am încredere în tine!']
   } : {
-    intro: ['Salut, ' + nume + '! Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la drumul pe care l-ai parcurs și la cât de mult ai evoluat.',
+    intro: [(nume ? 'Salut, ' + nume + '!' : 'Salut!') + ' Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la drumul pe care l-ai parcurs și la cât de mult ai evoluat.',
             'Mi-ar plăcea să scrii o scrisoare către versiunea ta din viitor, cea care a reușit să ajungă acolo unde își dorește astăzi.',
             'Scrie tot ce simți, cât mai sincer. Dacă dorești, poți împărtăși scrisoarea și cu mine, mi-ar face mare plăcere să o citesc!'],
     titlu: 'Imaginează-ți că ai reușit!',
@@ -242,14 +243,14 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
   }
   document.querySelectorAll('.seal .h').forEach((h, i) => { h.innerHTML = sealSVG('s' + i); });
   $('#mark').innerHTML = sealSVG('m');
-  $('#to-name').textContent = nume;
+  $('#to-name').textContent = nume || 'tine';
 
   // ---------- foaia ----------
   const acum = new Date();
   $('#date').textContent = LUNI[acum.getMonth()] + ' ' + acum.getFullYear();
   $('#intro').innerHTML = T.intro.map((p) => '<p>' + esc(p) + '</p>').join('');
   const h2 = document.createElement('h2'); h2.textContent = T.titlu; $('#intro').after(h2);
-  $('#dear').textContent = 'Dragă ' + nume + ' din viitor,';
+  $('#dear').textContent = nume ? 'Dragă ' + nume + ' din viitor,' : G('Dragă eu din viitor,', 'Dragă eu din viitor,');
   $('#closing').innerHTML = T.closing.map((p) => '<p>' + p + '</p>').join('');
   const qs = $('#qs');
   T.q.forEach((t, i) => {
@@ -262,7 +263,7 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   // ciorna rămâne pe telefon, ca să nu se piardă dacă închide pagina
-  const KEY = 'scrisoare:' + nume + ':' + varianta;
+  const KEY = 'scrisoare:' + (nume || '-') + ':' + varianta;
   let draft = {}; try { draft = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { draft = {}; }
   let tSave;
   document.querySelectorAll('.q textarea').forEach((ta) => {
@@ -332,7 +333,7 @@ h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); m
     try {
       if (!demo) {
         const f = new URLSearchParams();
-        f.append(ENTRY.nume, nume); f.append(ENTRY.varianta, varianta);
+        f.append(ENTRY.nume, nume || '(fără nume)'); f.append(ENTRY.varianta, varianta);
         ['q1', 'q2', 'q3', 'q4', 'q5'].forEach((k) => f.append(ENTRY[k], r[k] || ''));
         await fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body: f });
       }
