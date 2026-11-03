@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Scrisoare către viitor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+/* Hârtie și ceară: un singur aspect, deschis, ca o scrisoare reală pe o masă albă. */
+:root {
+  color-scheme: light;
+  --table: #fbfaf7;
+  --table-2: #f1eee7;
+  --env: #f7f3ea;
+  --env-2: #ece6d8;
+  --env-3: #e2dac7;
+  --env-line: rgba(120, 100, 60, .18);
+  --paper: #fffdf8;
+  --ink: #2a2620;
+  --ink-2: #5d564b;
+  --ink-hand: #23324f;
+  --rule: rgba(52, 78, 130, .20);
+  --wax: #a51d22;
+  --wax-2: #6e0f13;
+  --wax-hi: #d8484b;
+  --hand: "Caveat", "Segoe Script", "Bradley Hand", cursive;
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+}
+html, body { background: var(--table); color: var(--ink); }
+body { margin: 0; min-height: 100vh; font-family: var(--serif); overflow-x: hidden; background: radial-gradient(120% 90% at 50% 40%, #ffffff 0, var(--table) 55%, var(--table-2) 100%) fixed; }
+* { box-sizing: border-box; }
+
+/* scena cu plicul */
+.stage { position: fixed; inset: 0; display: grid; place-items: center; perspective: 1400px; overflow: hidden; z-index: 5; }
+.stage[hidden] { display: none; }
+.flyer { position: relative; width: min(86vw, 440px); aspect-ratio: 1.58; will-change: transform; }
+.shadow { position: absolute; left: 8%; right: 8%; bottom: -9%; height: 14%; border-radius: 50%; background: radial-gradient(closest-side, rgba(60, 45, 20, .22), transparent); filter: blur(4px); }
+.env { position: absolute; inset: 0; transform-style: preserve-3d; }
+.env .back { position: absolute; inset: 0; border-radius: 6px; background: linear-gradient(160deg, var(--env-2), var(--env-3)); box-shadow: 0 18px 40px rgba(70, 50, 20, .18), 0 2px 4px rgba(70, 50, 20, .12); }
+.env .letter { position: absolute; left: 6%; right: 6%; top: 6%; height: 86%; border-radius: 3px; background: var(--paper); box-shadow: 0 1px 3px rgba(0,0,0,.12); padding: 9% 9%; z-index: 2; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+.env .letter i { display: block; height: 2px; margin: 0 0 9% 0; background: var(--rule); border-radius: 2px; }
+.env .letter i:first-child { width: 45%; height: 6px; background: transparent; font: 600 clamp(16px, 4.6vw, 22px)/1 var(--hand); color: var(--ink-hand); margin-bottom: 12%; }
+.env .front { position: absolute; inset: 0; z-index: 3; border-radius: 6px; background: linear-gradient(170deg, var(--env), var(--env-2)); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); }
+.env .front::before, .env .front::after { content: ""; position: absolute; inset: 0; }
+.env .front::before { background: linear-gradient(115deg, rgba(255,255,255,.55), transparent 40%); clip-path: polygon(0 0, 50% 54%, 0 100%); }
+.env .front::after { background: linear-gradient(245deg, rgba(120,100,60,.08), transparent 45%); clip-path: polygon(100% 0, 50% 54%, 100% 100%); }
+.env .to { position: absolute; z-index: 4; right: 9%; bottom: 9%; text-align: left; font: 600 clamp(26px, 7.4vw, 38px)/1 var(--hand); color: var(--ink-hand); transform: rotate(-4deg); transform-origin: right bottom; }
+.env .to small { display: block; font-size: .55em; color: var(--ink-2); margin-bottom: 2px; }
+.env .flap { position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 5; transform-origin: 50% 0; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.5,0,.3,1), z-index 0s .38s; }
+.env .flap .o, .env .flap .i { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); backface-visibility: hidden; border-radius: 6px 6px 0 0; }
+.env .flap .o { background: linear-gradient(180deg, #faf7f0, var(--env-2)); filter: drop-shadow(0 2px 2px rgba(0,0,0,.08)); }
+.env .flap .i { background: linear-gradient(0deg, var(--env-3), #d8cfba); transform: rotateX(180deg); }
+.env.open .flap { transform: rotateX(178deg); z-index: 1; }
+.env.out .letter { transform: translateY(-62%); }
+
+/* sigiliul de ceară */
+.seal { position: absolute; z-index: 6; left: 50%; top: 56%; width: clamp(58px, 16vw, 78px); aspect-ratio: 1; transform: translate(-50%, -50%); border: 0; padding: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.seal .h { position: absolute; inset: 0; transition: transform .7s cubic-bezier(.3,.7,.3,1), opacity .7s; }
+.seal .h.w { z-index: 1; }
+.seal.broken .h.w { opacity: 0; transition: opacity .05s; }
+.seal .h.l { clip-path: polygon(0 0, 54% 0, 46% 38%, 56% 62%, 47% 100%, 0 100%); }
+.seal .h.r { clip-path: polygon(54% 0, 100% 0, 100% 100%, 47% 100%, 56% 62%, 46% 38%); }
+.seal svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 3px rgba(80, 10, 10, .35)); }
+.seal:focus-visible { outline: 3px solid rgba(165, 29, 34, .35); outline-offset: 6px; border-radius: 50%; }
+.seal.broken .h.l { transform: translate(-46%, 60%) rotate(-38deg); opacity: 0; }
+.seal.broken .h.r { transform: translate(46%, 70%) rotate(34deg); opacity: 0; }
+.seal.pulse { animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.07); } }
+.hint { position: absolute; left: 0; right: 0; top: calc(100% + 26px); text-align: center; font: 600 22px/1 var(--hand); color: var(--ink-2); opacity: 0; transition: opacity .6s; }
+.hint.on { opacity: 1; }
+
+/* scrisoarea deschisă */
+.page { min-height: 100vh; padding-left: max(14px, env(safe-area-inset-left, 0px)); padding-right: max(14px, env(safe-area-inset-right, 0px)); padding-block: 28px 140px; display: flex; justify-content: center; }
+.page[hidden] { display: none; }
+.paper { position: relative; width: min(100%, 720px); background: var(--paper); border-radius: 4px; padding: clamp(28px, 7vw, 64px) clamp(22px, 7vw, 68px) clamp(36px, 7vw, 64px); box-shadow: 0 1px 2px rgba(60,45,20,.08), 0 24px 60px rgba(60,45,20,.12);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .25 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0; transform: translateY(24px) scale(.98); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+.paper.in { opacity: 1; transform: none; }
+.mark { position: absolute; top: 22px; right: 24px; width: 46px; opacity: .9; }
+.date { font: 500 15px/1 var(--serif); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 26px; }
+.note { font: 500 clamp(18px, 4.4vw, 20.5px)/1.55 var(--serif); color: var(--ink); text-wrap: pretty; }
+.note p { margin: 0 0 14px; }
+.note b { font-weight: 600; }
+h2 { font: 700 clamp(30px, 8vw, 40px)/1.1 var(--hand); color: var(--ink-hand); margin: 30px 0 6px; transform: rotate(-1deg); }
+.dear { font: 600 clamp(28px, 7vw, 34px)/1.2 var(--hand); color: var(--ink-hand); margin: 30px 0 4px; }
+.q { margin: 22px 0 0; }
+.q label { display: block; font: italic 500 clamp(18px, 4.6vw, 21px)/1.4 var(--serif); color: var(--ink-2); margin-bottom: 2px; }
+.q textarea { display: block; width: 100%; min-height: 102px; border: 0; outline: 0; resize: none; overflow: hidden; padding: 2px 2px 0; background: transparent; color: var(--ink-hand); font: 500 26px/34px var(--hand);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 33px, var(--rule) 33px 34px); background-attachment: local; }
+.q textarea:focus { background-image: repeating-linear-gradient(to bottom, transparent 0 33px, rgba(52, 78, 130, .38) 33px 34px); }
+.q .pa { display: none; }
+.closing { margin-top: 34px; }
+.sign { font: 600 34px/1 var(--hand); color: var(--ink-hand); margin-top: 18px; transform: rotate(-2deg); display: inline-block; }
+
+/* bara cu butoane */
+.bar { position: fixed; z-index: 10; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 10px; padding: 14px max(14px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px)); background: linear-gradient(to top, rgba(251,250,247,.98) 60%, rgba(251,250,247,0)); opacity: 0; transform: translateY(20px); transition: opacity .6s .4s, transform .6s .4s; pointer-events: none; }
+.bar.in { opacity: 1; transform: none; pointer-events: auto; }
+.bar[hidden] { display: none; }
+.btn { border: 0; border-radius: 999px; padding: 13px 18px; white-space: nowrap; font: 600 15px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.btn.send { background: var(--wax); color: #fff; box-shadow: 0 6px 18px rgba(165, 29, 34, .28); }
+.btn.print { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(60,45,20,.18); }
+.btn:disabled { opacity: .55; cursor: default; }
+.saved { position: fixed; z-index: 11; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); font: 500 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink-2); background: rgba(255,255,255,.9); padding: 7px 12px; border-radius: 99px; box-shadow: 0 2px 10px rgba(0,0,0,.06); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.saved.on { opacity: 1; }
+
+/* confirmare */
+.done { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: rgba(251, 250, 247, .92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding: 24px; }
+.done[hidden] { display: none; }
+.done .box { text-align: center; max-width: 420px; }
+.done .mini { width: 120px; margin: 0 auto 18px; animation: away 1.6s cubic-bezier(.5,0,.3,1) both; }
+@keyframes away { 0% { transform: translateY(30px) scale(.8); opacity: 0; } 35% { transform: none; opacity: 1; } 100% { transform: none; opacity: 1; } }
+.done h3 { font: 700 38px/1.1 var(--hand); color: var(--ink-hand); margin: 0 0 8px; }
+.done p { font: 500 19px/1.5 var(--serif); color: var(--ink-2); margin: 0 0 18px; }
+
+.demo { position: fixed; z-index: 30; top: calc(10px + env(safe-area-inset-top, 0px)); left: max(12px, env(safe-area-inset-left, 0px)); font: 600 12px/1 -apple-system, BlinkMacSystemFont, sans-serif; color: #8a5a00; background: #fff2d6; padding: 6px 12px; border-radius: 99px; white-space: nowrap; }
+.demo[hidden] { display: none; }
+.replay { position: fixed; z-index: 30; top: calc(10px + env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); font: 600 12px/1 -apple-system, BlinkMacSystemFont, sans-serif; color: var(--ink-2); background: #fff; border: 0; padding: 7px 12px; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(60,45,20,.15); cursor: pointer; }
+.replay[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) { .flyer, .env .flap, .env .letter, .seal .h, .paper, .bar { transition: none !important; animation: none !important; } }
+
+/* printare: doar foaia, exact cum arată */
+@page { size: A4; margin: 14mm; }
+@media print {
+  html, body { background: #fff !important; }
+  .stage, .bar, .saved, .done, .demo, .replay { display: none !important; }
+  .page { display: block !important; padding: 0 !important; min-height: 0; }
+  .paper { width: 100%; box-shadow: none; opacity: 1 !important; transform: none !important; padding: 0; background-image: none; }
+  .mark { top: -6px; right: 0; width: 34px; }
+  .date { padding-right: 44px; }
+  .q textarea { display: none; }
+  .q .pa { display: block; white-space: pre-wrap; color: var(--ink-hand); font: 500 22px/30px var(--hand); min-height: 90px; padding: 0 2px;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px); -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
+  .q { break-inside: avoid; }
+  .q label { break-after: avoid; }
+}
+</style>
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="demo" id="demo" hidden>Previzualizare</div>
+<button class="replay" id="replay" type="button" hidden>Vezi din nou animația</button>
+
+<div class="stage" id="stage">
+  <div class="flyer" id="flyer">
+    <div class="shadow" id="shadow"></div>
+    <div class="env" id="env">
+      <div class="back"></div>
+      <div class="letter" id="minilet"><i></i><i></i><i></i><i></i><i style="width:70%"></i></div>
+      <div class="front"></div>
+      <div class="to"><small>Pentru</small><span id="to-name"></span></div>
+      <div class="flap"><div class="o"></div><div class="i"></div></div>
+      <button class="seal" id="seal" type="button" aria-label="Rupe sigiliul și deschide scrisoarea">
+        <span class="h l"></span><span class="h r"></span><span class="h w"></span>
+      </button>
+    </div>
+    <div class="hint" id="hint">atinge sigiliul</div>
+  </div>
+</div>
+
+<main class="page" id="page" hidden>
+  <article class="paper" id="paper" aria-label="Scrisoarea ta">
+    <div class="mark" id="mark" aria-hidden="true"></div>
+    <p class="date" id="date"></p>
+    <div class="note" id="intro"></div>
+    <div class="dear" id="dear"></div>
+    <div id="qs"></div>
+    <div class="note closing" id="closing"></div>
+    <div class="sign">Sebastian</div>
+  </article>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <button class="btn send" id="send" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>Trimite-o mentorului tău</button>
+  <button class="btn print" id="print" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Printează</button>
+</div>
+<div class="saved" id="saved" role="status">Salvat pe telefonul tău</div>
+
+<div class="done" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="done-t">
+  <div class="box">
+    <div class="mini" id="done-env" aria-hidden="true"></div>
+    <h3 id="done-t">Scrisoarea a plecat!</h3>
+    <p id="done-p">Mulțumesc că ai împărtășit-o cu mine. O s-o citesc cu mare drag.</p>
+    <button class="btn print" id="done-print" type="button">Printează-o și pentru tine</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  /* Pe pagina reală, FORM_ACTION e adresa formResponse a formularului Google
+     și ENTRY sunt câmpurile lui; fără ele, pagina rulează ca previzualizare. */
+  const FORM_ACTION = '';
+  const ENTRY = { nume: '', varianta: '', q1: '', q2: '', q3: '', q4: '', q5: '' };
+
+  const $ = (s) => document.querySelector(s);
+  const P = new URLSearchParams(location.search);
+  const demo = !FORM_ACTION;
+  const nume = (P.get('n') || 'Ana').slice(0, 40);
+  const fem = (P.get('g') || 'f') !== 'm';
+  const varianta = P.get('v') === 'atins' ? 'atins' : 'drum';
+  const G = (f, m) => (fem ? f : m);
+  const LUNI = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie', 'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'];
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- textul ----------
+  const T = varianta === 'atins' ? {
+    intro: ['Salut, ' + nume + '! Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la tot ce ai construit și la omul care ai devenit.',
+            'Mi-ar plăcea să scrii o scrisoare către versiunea ta din viitor, cea care a păstrat tot ce ai construit în aceste luni și a mers și mai departe.',
+            'Scrie tot ce simți, cât mai sincer. Dacă dorești, poți împărtăși scrisoarea și cu mine, mi-ar face mare plăcere să o citesc!'],
+    titlu: 'Imaginează-ți că a trecut un an.',
+    q: ['Cum te simți?', 'Ce obiceiuri au rămas cu tine?', 'Ce ai depășit ca să păstrezi rezultatul?', 'Pentru ce ești ' + G('mândră', 'mândru') + ' de tine?', 'Ce ai vrea să îi spui ' + G('celei', 'celui') + ' care ești astăzi, la finalul acestui program?'],
+    closing: ['Pune scrisoarea într-un plic și păstrează-o undeva la îndemână. O poți reciti când simți că vechile obiceiuri încearcă să se întoarcă sau o poți deschide peste un an, ca să vezi cât de departe ai ajuns.',
+              'Să îți amintească mereu de ce ai început și cât de mult valorezi. <b>Ai demonstrat că poți</b>, iar de aici evoluția continuă. Eu am încredere în tine!']
+  } : {
+    intro: ['Salut, ' + nume + '! Ne apropiem de finalul programului și vreau să îți propun ceva special: un moment în care să te oprești puțin și să te uiți la tine, la drumul pe care l-ai parcurs și la cât de mult ai evoluat.',
+            'Mi-ar plăcea să scrii o scrisoare către versiunea ta din viitor, cea care a reușit să ajungă acolo unde își dorește astăzi.',
+            'Scrie tot ce simți, cât mai sincer. Dacă dorești, poți împărtăși scrisoarea și cu mine, mi-ar face mare plăcere să o citesc!'],
+    titlu: 'Imaginează-ți că ai reușit!',
+    q: ['Cum te simți?', 'Ce s-a schimbat în viața ta?', 'Ce ai depășit ca să ajungi acolo?', 'Pentru ce ești ' + G('mândră', 'mândru') + ' de tine?', 'Ce ai vrea să îi spui ' + G('celei', 'celui') + ' care ești astăzi și care încă muncește pentru acea schimbare?'],
+    closing: ['Pune scrisoarea într-un plic și păstrează-o undeva la îndemână. O poți reciti când simți că îți pierzi motivația sau o poți deschide în ziua în care îți vei atinge obiectivul.',
+              'Să îți amintească mereu de ce ai început și cât de mult îți dorești această schimbare. Iar până în ziua în care vei spune <b>„Am reușit!”</b>, continuăm să facem pași înainte. Eu am încredere în tine!']
+  };
+
+  // ---------- sigiliul de ceară (SVG) ----------
+  function sealSVG(id) {
+    const pts = []; const n = 22;
+    for (let i = 0; i < n * 2; i++) { const a = (i / (n * 2)) * Math.PI * 2; const r = i % 2 ? 46 : 49 + (i * 7 % 3) * .6; pts.push((50 + r * Math.cos(a)).toFixed(1) + ',' + (50 + r * Math.sin(a)).toFixed(1)); }
+    return '<svg viewBox="0 0 100 100" aria-hidden="true"><defs>' +
+      '<radialGradient id="w' + id + '" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#d8484b"/><stop offset=".45" stop-color="#a51d22"/><stop offset="1" stop-color="#6e0f13"/></radialGradient>' +
+      '<radialGradient id="x' + id + '" cx="50%" cy="50%" r="50%"><stop offset=".7" stop-color="#8f171c"/><stop offset="1" stop-color="#b8282d"/></radialGradient></defs>' +
+      '<polygon points="' + pts.join(' ') + '" fill="url(#w' + id + ')"/>' +
+      '<circle cx="50" cy="50" r="33" fill="url(#x' + id + ')" stroke="rgba(255,190,190,.35)" stroke-width="1.2"/>' +
+      '<circle cx="50" cy="50" r="28" fill="none" stroke="rgba(60,0,0,.35)" stroke-width="1" stroke-dasharray="1.5 2.2"/>' +
+      '<text x="50" y="59" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="600" font-size="27" fill="#7a1015" stroke="rgba(255,170,170,.45)" stroke-width=".6">BT</text>' +
+      '<ellipse cx="36" cy="30" rx="12" ry="6" fill="rgba(255,255,255,.18)" transform="rotate(-30 36 30)"/></svg>';
+  }
+  document.querySelectorAll('.seal .h').forEach((h, i) => { h.innerHTML = sealSVG('s' + i); });
+  $('#mark').innerHTML = sealSVG('m');
+  $('#to-name').textContent = nume;
+
+  // ---------- foaia ----------
+  const acum = new Date();
+  $('#date').textContent = LUNI[acum.getMonth()] + ' ' + acum.getFullYear();
+  $('#intro').innerHTML = T.intro.map((p) => '<p>' + esc(p) + '</p>').join('');
+  const h2 = document.createElement('h2'); h2.textContent = T.titlu; $('#intro').after(h2);
+  $('#dear').textContent = 'Dragă ' + nume + ' din viitor,';
+  $('#closing').innerHTML = T.closing.map((p) => '<p>' + p + '</p>').join('');
+  const qs = $('#qs');
+  T.q.forEach((t, i) => {
+    const w = document.createElement('div'); w.className = 'q';
+    const id = 'q' + (i + 1);
+    w.innerHTML = '<label for="' + id + '"></label><textarea id="' + id + '" rows="3" autocomplete="off" spellcheck="true"></textarea><div class="pa" aria-hidden="true"></div>';
+    w.querySelector('label').textContent = t;
+    qs.appendChild(w);
+  });
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  // ciorna rămâne pe telefon, ca să nu se piardă dacă închide pagina
+  const KEY = 'scrisoare:' + nume + ':' + varianta;
+  let draft = {}; try { draft = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { draft = {}; }
+  let tSave;
+  document.querySelectorAll('.q textarea').forEach((ta) => {
+    if (draft[ta.id]) ta.value = draft[ta.id];
+    const grow = () => { ta.style.height = 'auto'; ta.style.height = Math.max(102, ta.scrollHeight) + 'px'; };
+    ta.addEventListener('input', () => {
+      grow(); draft[ta.id] = ta.value;
+      clearTimeout(tSave); tSave = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(draft)); const s = $('#saved'); s.classList.add('on'); setTimeout(() => s.classList.remove('on'), 1200); } catch (e) {} }, 700);
+    });
+    requestAnimationFrame(grow);
+  });
+
+  // ---------- animația ----------
+  const flyer = $('#flyer'), env = $('#env'), seal = $('#seal'), hint = $('#hint');
+  let deschis = false;
+  function zbor() {
+    deschis = false;
+    $('#stage').hidden = false; $('#page').hidden = true; $('#bar').hidden = true; $('#bar').classList.remove('in'); $('#paper').classList.remove('in');
+    env.classList.remove('open', 'out'); seal.classList.remove('broken', 'pulse'); hint.classList.remove('on');
+    flyer.style.opacity = '1';
+    if (reduce || !flyer.animate) { flyer.style.transform = 'none'; gata(); return; }
+    const vw = innerWidth, vh = innerHeight;
+    const a = flyer.animate([
+      { transform: `translate(${-0.75 * vw}px, ${-0.62 * vh}px) rotate(-38deg) scale(.32)`, opacity: 0 },
+      { transform: `translate(${-0.45 * vw}px, ${-0.38 * vh}px) rotate(-6deg) scale(.38)`, opacity: 1, offset: .18 },
+      { transform: `translate(${-0.16 * vw}px, ${-0.30 * vh}px) rotate(16deg) scale(.44)`, offset: .38 },
+      { transform: `translate(${0.10 * vw}px, ${-0.12 * vh}px) rotate(-9deg) scale(.5)`, offset: .58 },
+      { transform: `translate(${-0.03 * vw}px, ${0.02 * vh}px) rotate(5deg) scale(.55)`, offset: .76 },
+      { transform: `translate(${0.01 * vw}px, 0px) rotate(-1.5deg) scale(.57)`, offset: .9 },
+      { transform: 'translate(0, 0) rotate(0deg) scale(.58)' }
+    ], { duration: 2800, easing: 'cubic-bezier(.33,.0,.25,1)', fill: 'forwards' });
+    $('#shadow').animate([{ opacity: 0 }, { opacity: 0, offset: .6 }, { opacity: 1 }], { duration: 2800, fill: 'forwards' });
+    a.onfinish = () => {
+      const b = flyer.animate([{ transform: 'scale(.58)' }, { transform: 'scale(1.04)', offset: .7 }, { transform: 'scale(1)' }], { duration: 900, easing: 'cubic-bezier(.3,.7,.3,1)', fill: 'forwards' });
+      b.onfinish = gata;
+    };
+  }
+  function gata() { seal.classList.add('pulse'); hint.classList.add('on'); }
+
+  seal.addEventListener('click', () => {
+    if (deschis) return; deschis = true;
+    seal.classList.remove('pulse'); hint.classList.remove('on');
+    seal.classList.add('broken');
+    setTimeout(() => env.classList.add('open'), reduce ? 0 : 380);
+    setTimeout(() => env.classList.add('out'), reduce ? 0 : 1050);
+    setTimeout(() => {
+      const fin = () => { $('#stage').hidden = true; $('#page').hidden = false; $('#bar').hidden = false; window.scrollTo(0, 0);
+        requestAnimationFrame(() => { $('#paper').classList.add('in'); $('#bar').classList.add('in'); document.querySelectorAll('.q textarea').forEach((t) => { t.style.height = 'auto'; t.style.height = Math.max(102, t.scrollHeight) + 'px'; }); }); };
+      if (reduce || !flyer.animate) return fin();
+      const z = flyer.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'translateY(-6%) scale(1.5)', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+      z.onfinish = fin;
+    }, reduce ? 0 : 2100);
+  });
+
+  // ---------- trimitere și printare ----------
+  function raspunsuri() { const r = {}; document.querySelectorAll('.q textarea').forEach((t) => { r[t.id] = t.value.trim(); }); return r; }
+  function pregatestePrint() { document.querySelectorAll('.q').forEach((q) => { q.querySelector('.pa').textContent = q.querySelector('textarea').value; }); }
+  window.addEventListener('beforeprint', pregatestePrint);
+  function printeaza() { pregatestePrint(); try { window.print(); } catch (e) {} }
+  $('#print').addEventListener('click', printeaza);
+  $('#done-print').addEventListener('click', printeaza);
+
+  $('#send').addEventListener('click', async () => {
+    const r = raspunsuri();
+    if (!Object.values(r).some(Boolean)) { $('#q1').focus(); return; }
+    const b = $('#send'); b.disabled = true;
+    try {
+      if (!demo) {
+        const f = new URLSearchParams();
+        f.append(ENTRY.nume, nume); f.append(ENTRY.varianta, varianta);
+        ['q1', 'q2', 'q3', 'q4', 'q5'].forEach((k) => f.append(ENTRY[k], r[k] || ''));
+        await fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body: f });
+      }
+      $('#done-env').innerHTML = '<svg viewBox="0 0 120 76"><rect x="2" y="2" width="116" height="72" rx="5" fill="#f1ece0" stroke="rgba(120,100,60,.25)"/><path d="M4 6 60 44 116 6" fill="none" stroke="rgba(120,100,60,.35)" stroke-width="2"/><circle cx="60" cy="44" r="11" fill="#a51d22"/></svg>';
+      $('#done-p').textContent = demo ? 'În previzualizare nu se trimite nimic. Pe pagina reală, scrisoarea ajunge la Sebastian și apare pe fișa clientei.' : 'Mulțumesc că ai împărtășit-o cu mine. O s-o citesc cu mare drag.';
+      $('#done').hidden = false;
+    } catch (e) { b.disabled = false; alertBox('Nu s-a putut trimite acum. Verifică internetul și încearcă din nou.'); }
+  });
+  $('#done').addEventListener('click', (e) => { if (e.target.id === 'done') { $('#done').hidden = true; $('#send').disabled = false; } });
+  function alertBox(t) { const s = $('#saved'); s.textContent = t; s.classList.add('on'); setTimeout(() => { s.classList.remove('on'); s.textContent = 'Salvat pe telefonul tău'; }, 3000); }
+
+  if (demo) { $('#demo').hidden = false; $('#replay').hidden = false; }
+  $('#replay').addEventListener('click', () => { $('#done').hidden = true; zbor(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(zbor, 350)); else setTimeout(zbor, 350);
+})();
+</script>
+</body>
+</html>
