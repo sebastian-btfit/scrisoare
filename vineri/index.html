@@ -91,6 +91,8 @@ p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--ink-2); }
 .tips { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .tips li { display: flex; gap: 10px; align-items: flex-start; font-size: 15.5px; line-height: 1.4; color: var(--ink-2); background: #fff; border-radius: 14px; padding: 10px 12px; box-shadow: 0 1px 0 var(--line); }
 .tips li b { color: var(--ink); }
+#tips0 { text-align: left; margin-top: 4px; }
+.seara .sun { background: radial-gradient(circle at 38% 36%, #fff8dc, #f0da92 55%, #d8b95c); box-shadow: 0 0 46px rgba(216, 185, 92, .55); }
 .tips li span:first-child { font-size: 18px; line-height: 1.2; }
 .num { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 10px 30px rgba(60, 50, 20, .08), inset 0 0 0 2px var(--line); }
 .num button { width: 54px; height: 54px; border-radius: 16px; border: 0; background: var(--green-soft); color: var(--green); font-size: 28px; font-weight: 900; cursor: pointer; flex: 0 0 auto; }
@@ -165,6 +167,7 @@ canvas.conf { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
     <div class="eyebrow" id="azi"></div>
     <h1 id="salut"></h1>
     <p id="intro0"></p>
+    <ul class="tips" id="tips0" hidden></ul>
     <div class="hand" id="cine">— Sebastian</div>
   </div>
 </section>
@@ -309,6 +312,15 @@ canvas.conf { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
   $('#azi').textContent = ZILE[d.getDay()] + ', ' + d.getDate() + ' ' + LUNI[d.getMonth()];
   $('#salut').textContent = 'Bună dimineața' + (nume ? ', ' + nume : '') + '! ☀️';
   $('#intro0').textContent = 'E vinerea ' + vin + ' din drumul tău. Două minute pentru tine: cântarul, centimetrul și cum a fost săptămâna.';
+  // Joi (linkul vine cu o seară înainte): pregătire pentru mâine, măsurătorile se deschid vineri
+  const ziJoi = d.getDay() === 4 && !P.has('acum');
+  if (ziJoi) {
+    document.body.classList.add('seara');
+    $('#salut').textContent = (d.getHours() >= 17 ? 'Bună seara' : 'Salut') + (nume ? ', ' + nume : '') + '! 🌙';
+    $('#intro0').textContent = 'Mâine e vinerea ' + vin + ' din drumul tău. Păstrează mesajul ăsta și deschide linkul mâine dimineață: îți ia două minute.';
+    const t = $('#tips0'); t.hidden = false;
+    [['⚖️', '<b>Cântarul</b> la îndemână, pe o suprafață dreaptă și tare.'], ['📏', '<b>Metrul de croitorie</b> pregătit de seara asta.'], ['☀️', '<b>Mâine dimineață</b>, după baie și înainte să mănânci sau să bei ceva.']].forEach(([e, h]) => { const li = document.createElement('li'); li.innerHTML = '<span>' + e + '</span><span>' + h + '</span>'; t.appendChild(li); });
+  }
 
   // ---------- 1 · harta ----------
   $('#map-t').textContent = 'Vinerea ' + vin + ' din ' + TOTAL;
@@ -440,12 +452,13 @@ canvas.conf { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
   // ---------- navigare ----------
   const ECRANE = ['s0', 's1', 's2', 's3', 's4', 's5'];
   const BTN = ['Hai să începem', 'La măsurători →', 'Mai departe', 'Mai departe', 'Trimite', ''];
+  if (ziJoi) { BTN[0] = 'Vezi drumul tău'; BTN[1] = 'Ne vedem mâine dimineață ☀️'; $('#next').textContent = BTN[0]; }
   let pas = 0;
   function arata(i) {
     const prev = document.getElementById(ECRANE[pas]);
     prev.classList.remove('on'); prev.classList.add('out'); setTimeout(() => prev.classList.remove('out'), 600);
     pas = i; const el = document.getElementById(ECRANE[i]); el.classList.add('on'); el.scrollTop = 0;
-    $('#next').textContent = BTN[i]; $('#next').hidden = i === 5; $('#back').hidden = i < 2 || i === 5;
+    $('#next').textContent = BTN[i]; $('#next').hidden = i === 5; $('#next').disabled = ziJoi && i === 1; $('#back').hidden = i < 2 || i === 5;
     $('#top').hidden = i < 2 || i === 5;
     document.querySelectorAll('#top i').forEach((x, k) => x.classList.toggle('done', k < i - 1));
     if (i === 1) { tinta = deseneazaHarta(); setTimeout(() => { const w = $('#walker'); if (w) w.style.transform = 'translate(' + tinta[0] + 'px,' + (tinta[1] - 30) + 'px)'; const box = $('#s1'); const svg = $('#map svg'); if (svg) { const sc = svg.getBoundingClientRect().width / 340; box.scrollTo({ top: Math.max(0, tinta[1] * sc - box.clientHeight / 2 + 80), behavior: reduce ? 'auto' : 'smooth' }); } }, 450); }
@@ -454,6 +467,7 @@ canvas.conf { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
   }
   $('#back').addEventListener('click', () => arata(pas - 1));
   $('#next').addEventListener('click', async () => {
+    if (ziJoi && pas >= 1) return;
     if (pas === 2) { const v = nr($('#kg').value); if (!(v > 30 && v < 300)) { $('#e-kg').textContent = 'Scrie greutatea în kg, de exemplu 78,4'; return; } }
     if (pas === 3) { const v = nr($('#talie').value); if (!(v > 40 && v < 200)) { $('#e-talie').textContent = 'Scrie talia în cm, de exemplu 92'; return; } }
     if (pas === 4) { await trimite(); return; }
